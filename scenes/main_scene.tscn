@@ -1,0 +1,106 @@
+[gd_scene load_steps=14 format=3 uid="uid://c46xhcphyanjs"]
+
+[ext_resource type="PackedScene" uid="uid://dkh5gq20djuhr" path="res://scenes/player.tscn" id="1_w2twt"]
+[ext_resource type="PackedScene" uid="uid://bblar6c1bs3sr" path="res://scenes/sticky_wall.tscn" id="3_7ykc4"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_w2twt"]
+albedo_color = Color(0.15127608, 0.15127608, 0.15127608, 1)
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_w2twt"]
+
+[sub_resource type="Sky" id="Sky_w2twt"]
+sky_material = SubResource("ProceduralSkyMaterial_w2twt")
+
+[sub_resource type="Environment" id="Environment_pw63i"]
+background_mode = 2
+sky = SubResource("Sky_w2twt")
+ambient_light_source = 3
+ambient_light_color = Color(5.1018596e-06, 0.6254613, 0.6163081, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5r5lr"]
+albedo_color = Color(0.7294118, 0.23921569, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_pu3yx"]
+resource_local_to_scene = true
+material = SubResource("StandardMaterial3D_5r5lr")
+size = Vector3(4, 0.5, 3)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pw63i"]
+albedo_color = Color(0.7291523, 0.23946726, 9.62615e-08, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gubc5"]
+albedo_color = Color(0.7294118, 0.23921569, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_pw63i"]
+resource_local_to_scene = true
+material = SubResource("StandardMaterial3D_gubc5")
+size = Vector3(4, 6, 0.5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_7ykc4"]
+resource_local_to_scene = true
+material = SubResource("StandardMaterial3D_gubc5")
+size = Vector3(2, 7, 0.5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_rt2n2"]
+resource_local_to_scene = true
+material = SubResource("StandardMaterial3D_5r5lr")
+size = Vector3(5, 7, 0.1)
+
+[node name="main-scene" type="Node3D"]
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5704193, -0.17974854, -5.709503)
+material_override = SubResource("StandardMaterial3D_w2twt")
+use_collision = true
+size = Vector3(28.351227, 0.6405029, 28.809875)
+
+[node name="player" parent="." instance=ExtResource("1_w2twt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.6427672, 2.066558, -3.279591)
+jump_velocity = 6.0
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_pw63i")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="WorldEnvironment"]
+transform = Transform3D(0.9659259, -1.1313339e-08, 0.25881907, -0.23933488, 0.38065076, 0.8932098, -0.09851968, -0.92471886, 0.3676804, -2.07366, 3.8151693, -1.5502803)
+sky_mode = 1
+
+[node name="stickable_walls" type="Node3D" parent="."]
+
+[node name="sticky-wall4" parent="stickable_walls" instance=ExtResource("3_7ykc4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.6011379, 9.766704, -11.865263)
+mesh = SubResource("BoxMesh_pu3yx")
+wall_width = 4.0
+wall_height = 0.5
+wall_depth = 3.0
+
+[node name="wall" type="CSGBox3D" parent="stickable_walls"]
+transform = Transform3D(0.498639, 0, -0.8668098, 0, 1, 0, 0.8668098, 0, 0.498639, 2.116654, 2.331771, -11.391828)
+layers = 3
+material_override = SubResource("StandardMaterial3D_pw63i")
+use_collision = true
+collision_layer = 4
+collision_mask = 2
+size = Vector3(7.5683594, 4.578247, 1)
+
+[node name="sticky-wall" parent="stickable_walls" instance=ExtResource("3_7ykc4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.6551094, 4.064859, -15.288812)
+mesh = SubResource("BoxMesh_pw63i")
+skeleton = NodePath("../..")
+wall_width = 4.0
+wall_height = 6.0
+wall_depth = 0.5
+
+[node name="sticky-wall2" parent="stickable_walls" instance=ExtResource("3_7ykc4")]
+transform = Transform3D(-0.019511579, 0, 0.9998096, 0, 1, 0, -0.9998096, 0, -0.019511579, -5.507328, 4.9186835, -10.964889)
+mesh = SubResource("BoxMesh_7ykc4")
+skeleton = NodePath("../..")
+wall_width = 2.0
+wall_height = 7.0
+wall_depth = 0.5
+
+[node name="sticky-wall3" parent="stickable_walls" instance=ExtResource("3_7ykc4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.6375294, 6.880612, -8.915201)
+mesh = SubResource("BoxMesh_rt2n2")
+wall_width = 5.0
+wall_height = 7.0

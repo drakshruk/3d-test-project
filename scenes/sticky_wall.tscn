@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://bblar6c1bs3sr"]
+
+[ext_resource type="Script" uid="uid://cpu71ek370mpt" path="res://scripts/sticky_wall.gd" id="1_uwdvs"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5r5lr"]
+albedo_color = Color(0.7294118, 0.23921569, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_uwdvs"]
+resource_local_to_scene = true
+material = SubResource("StandardMaterial3D_5r5lr")
+size = Vector3(1, 2, 0.1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_3kibn"]
+resource_local_to_scene = true
+size = Vector3(1, 2, 0.1)
+
+[node name="sticky-wall" type="MeshInstance3D"]
+mesh = SubResource("BoxMesh_uwdvs")
+script = ExtResource("1_uwdvs")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+collision_layer = 4
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("BoxShape3D_3kibn")
