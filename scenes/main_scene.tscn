@@ -1,7 +1,8 @@
-[gd_scene load_steps=14 format=3 uid="uid://c46xhcphyanjs"]
+[gd_scene load_steps=16 format=3 uid="uid://c46xhcphyanjs"]
 
 [ext_resource type="PackedScene" uid="uid://dkh5gq20djuhr" path="res://scenes/player.tscn" id="1_w2twt"]
 [ext_resource type="PackedScene" uid="uid://bblar6c1bs3sr" path="res://scenes/sticky_wall.tscn" id="3_7ykc4"]
+[ext_resource type="PackedScene" uid="uid://c0ocq4008msa3" path="res://scenes/killzone.tscn" id="3_pu3yx"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_w2twt"]
 albedo_color = Color(0.15127608, 0.15127608, 0.15127608, 1)
@@ -44,7 +45,9 @@ size = Vector3(2, 7, 0.5)
 [sub_resource type="BoxMesh" id="BoxMesh_rt2n2"]
 resource_local_to_scene = true
 material = SubResource("StandardMaterial3D_5r5lr")
-size = Vector3(5, 7, 0.1)
+size = Vector3(5, 7, 1)
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_gubc5"]
 
 [node name="main-scene" type="Node3D"]
 
@@ -55,8 +58,13 @@ use_collision = true
 size = Vector3(28.351227, 0.6405029, 28.809875)
 
 [node name="player" parent="." instance=ExtResource("1_w2twt")]
+unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.6427672, 2.066558, -3.279591)
 jump_velocity = 6.0
+dash_duration = 0.3
+dash_cooldown = 0.5
+dash_gravity_multiplier = 0.8
+post_dash_gravity_multiplier = 0.5
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_pw63i")
@@ -104,3 +112,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.6375294, 6.880612, -8.9152
 mesh = SubResource("BoxMesh_rt2n2")
 wall_width = 5.0
 wall_height = 7.0
+
+[node name="killzone" parent="." instance=ExtResource("3_pu3yx")]
+collision_mask = 7
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="killzone"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.379372, -19.229164, 0)
+shape = SubResource("WorldBoundaryShape3D_gubc5")

@@ -19,7 +19,6 @@ extends CharacterBody3D
 @export var dash_gravity_multiplier: float = 2.5  # Increased gravity during dash
 @export var post_dash_gravity_multiplier: float = 1.8  # Temporary increased gravity after dash
 @export var post_dash_gravity_duration: float = 0.5  # How long the extra gravity lasts
-
 @export_range(0.0, 2.0) var inertia_multiplier: float = 0.5  # How much current velocity affects dash
 @export var can_dash_in_air: bool = true
 
@@ -67,12 +66,13 @@ func _physics_process(delta: float) -> void:
 	_handle_character_rotation(delta)
 	_apply_movement()
 	move_and_slide()
-	
+
 func _handle_dash_input() -> void:
 	# Check if we can dash
 	if Input.is_action_just_pressed("dash") and dash_cooldown_timer <= 0:
 		if is_on_floor() or can_dash_in_air:
 			start_dash()
+
 func start_dash() -> void:
 	if is_dashing:
 		return
@@ -83,7 +83,7 @@ func start_dash() -> void:
 	
 	# Solution 2: Cancel some vertical velocity
 	if velocity.y > 0:  # Only cancel upward velocity
-		velocity.y *= 0.3
+		velocity.y *= 0.7
 	
 	# Calculate dash direction based on camera forward
 	var camera_forward = -camera_pivot.global_transform.basis.z
@@ -111,8 +111,8 @@ func _update_dash_timers(delta: float) -> void:
 			# Start post-dash gravity period
 			post_dash_gravity_timer = post_dash_gravity_duration
 			# Optional: Preserve some dash momentum when dash ends
-			velocity.x *= 0.7
-			velocity.z *= 0.7
+			velocity.x *= 0.9
+			velocity.z *= 0.9
 	# Update cooldown timer
 	if dash_cooldown_timer > 0:
 		dash_cooldown_timer -= delta
@@ -129,17 +129,18 @@ func try_stick_to_wall() -> void:
 	var raycasts = [wall_raycast_left, wall_raycast_right, wall_raycast_front]
 	for raycast in raycasts:
 		if raycast.is_colliding():
-			print("colliding with %s", raycast)
 			is_sticking_to_wall = true
 			current_wall_normal = raycast.get_collision_normal()
 			velocity.y = 0
 			break
 
+## Releases the player from sticking to the wall
 func release_from_the_wall() -> void:
 	if is_sticking_to_wall:
 		is_sticking_to_wall = false
 		current_wall_normal = Vector3.ZERO
 
+## Processes gravity and jumping, modifies velocity depending on the current state(dashing,jumping, etc)
 func _handle_gravity_and_jump(delta: float) -> void:
 	if is_sticking_to_wall:
 		velocity.y -= wall_stick_gravity * delta
@@ -175,6 +176,7 @@ func _handle_gravity_and_jump(delta: float) -> void:
 		velocity.y = jump_velocity
 		is_jumping = true
 
+## Checks if any of the raycasts are colliding with a stickable wall
 func _is_any_raycast_colliding() -> bool:
 	return (wall_raycast_front.is_colliding() or
 			wall_raycast_left.is_colliding() or
@@ -190,8 +192,8 @@ func _handle_movement_input() -> void:
 ## Rotates the character to face the movement direction
 func _handle_character_rotation(delta: float) -> void:
 	character.rotation.y = lerp_angle(character.rotation.y, camera_pivot.rotation.y + PI, rotation_speed * delta)
-	
-## Applies horizontal movement velocity based on input and sprint/walk state
+
+## Applies horizontal movement velocity based on input and sprint/stick-to-wall state
 func _apply_movement() -> void:
 	if is_dashing:
 		return
