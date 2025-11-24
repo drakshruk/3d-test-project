@@ -1,0 +1,33 @@
+[gd_scene load_steps=3 format=3 uid="uid://cmrs57umpurwt"]
+
+[ext_resource type="Script" uid="uid://chua2ty1e2vfx" path="res://scripts/terminal.gd" id="1_m430i"]
+[ext_resource type="Texture2D" uid="uid://bt6kctww13q8m" path="res://Teminal/bcg1.png" id="2_vs6ym"]
+
+[node name="Terminal" type="Node2D"]
+script = ExtResource("1_m430i")
+
+[node name="LineEdit" type="LineEdit" parent="."]
+top_level = true
+offset_top = 588.0
+offset_right = 1151.0
+offset_bottom = 647.0
+
+[node name="Label" type="Label" parent="."]
+top_level = true
+offset_right = 1152.0
+offset_bottom = 586.0
+vertical_alignment = 2
+
+[node name="BackGround" type="Parallax2D" parent="."]
+repeat_size = Vector2(1151.96, 647.965)
+autoscroll = Vector2(-10, 0)
+
+[node name="bg1" type="Sprite2D" parent="BackGround"]
+position = Vector2(576, 324)
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("2_vs6ym")
+
+[node name="Timer" type="Timer" parent="."]
+autostart = true
+
+[connection signal="text_submitted" from="LineEdit" to="." method="_on_line_edit_text_submitted"]
