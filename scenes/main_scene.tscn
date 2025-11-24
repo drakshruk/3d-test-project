@@ -66,6 +66,9 @@ dash_duration = 0.3
 dash_cooldown = 0.5
 dash_gravity_multiplier = 0.8
 post_dash_gravity_multiplier = 0.5
+slide_duration = 0.5
+slide_camera_tilt = 15.0
+can_slide_in_air = true
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_pw63i")
@@ -119,7 +122,7 @@ collision_mask = 7
 damage = 999.0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="killzone"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.379372, -19.229164, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -15, 0)
 shape = SubResource("WorldBoundaryShape3D_gubc5")
 
 [node name="enemy" parent="." instance=ExtResource("4_pu3yx")]

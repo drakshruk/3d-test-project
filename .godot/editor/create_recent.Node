@@ -1,9 +1,10 @@
+ShapeCast3D
 CollisionShape3D
+Area3D
+RayCast3D
 MeshInstance3D
 Timer
-Area3D
 StaticBody3D
-RayCast3D
 Node3D
 CSGBox3D
 Camera3D
