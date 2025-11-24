@@ -179,7 +179,7 @@ func _update_crouch_state(delta: float) -> void:
 	collision_shape.position.y -= height_diff / 2.0
 	
 	# Smooth camera transition
-	var camera_target_y = target_height - 0.2
+	var camera_target_y = target_height - 0.5
 	camera_pivot.position.y = lerp(camera_pivot.position.y, camera_target_y, crouch_transition_speed * delta)
 
 func change_hp(d_hp: float) -> void:
