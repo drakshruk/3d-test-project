@@ -1,5 +1,3 @@
+res://scenes/terminal.tscn
+res://scripts/terminal.gd
 res://scripts/killzone.gd
-res://scenes/main_scene.tscn
-res://scripts/player.gd
-res://scenes/enemy.tscn
-res://scenes/player.tscn
