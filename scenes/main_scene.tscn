@@ -1,9 +1,10 @@
-[gd_scene load_steps=17 format=3 uid="uid://c46xhcphyanjs"]
+[gd_scene load_steps=18 format=3 uid="uid://c46xhcphyanjs"]
 
 [ext_resource type="PackedScene" uid="uid://dkh5gq20djuhr" path="res://scenes/player.tscn" id="1_w2twt"]
 [ext_resource type="PackedScene" uid="uid://bblar6c1bs3sr" path="res://scenes/sticky_wall.tscn" id="3_7ykc4"]
 [ext_resource type="PackedScene" uid="uid://c0ocq4008msa3" path="res://scenes/killzone.tscn" id="3_pu3yx"]
 [ext_resource type="PackedScene" uid="uid://cn550inc4s84m" path="res://scenes/enemy.tscn" id="4_pu3yx"]
+[ext_resource type="PackedScene" uid="uid://ice0b24h0lnn" path="res://scenes/interact_area.tscn" id="5_gubc5"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_w2twt"]
 albedo_color = Color(0.15127608, 0.15127608, 0.15127608, 1)
@@ -66,9 +67,6 @@ dash_duration = 0.3
 dash_cooldown = 0.5
 dash_gravity_multiplier = 0.8
 post_dash_gravity_multiplier = 0.5
-slide_duration = 0.5
-slide_camera_tilt = 15.0
-can_slide_in_air = true
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_pw63i")
@@ -127,3 +125,9 @@ shape = SubResource("WorldBoundaryShape3D_gubc5")
 
 [node name="enemy" parent="." instance=ExtResource("4_pu3yx")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.3661108, 0.6405039, 2.0540357)
+
+[node name="interact_area_1" parent="." instance=ExtResource("5_gubc5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 2, 1)
+
+[node name="interact_area_2" parent="." instance=ExtResource("5_gubc5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.37231922, 0)

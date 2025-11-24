@@ -9,6 +9,8 @@ extends CharacterBody3D
 @export var i_frames: int = 10
 var hp: float = max_hp
 
+var current_interact_area = null # Указатель на текущую зону взаимодействия
+
 ## export group for movement
 @export_group("Movement")
 @export_range(0.1, 20.0, 0.1, "or_greater") var speed: float = 5.0
@@ -85,6 +87,36 @@ func _ready() -> void:
 		var shape: CylinderShape3D = collision_shape.shape
 		original_collision_shape_height = shape.height
 		original_collision_shape_position = collision_shape.position.y
+	
+	# Находим все узлы interact_area в сцене
+	# Это может быть неэффективно, если их много. Лучше подключаться при загрузке зон. (На будущее)
+	var interact_areas = get_tree().get_nodes_in_group("interact_areas")
+	for area in interact_areas:
+		if area.has_signal("player_entered"):
+			area.player_entered.connect(_on_interact_area_entered)
+		if area.has_signal("player_exited"):
+			area.player_exited.connect(_on_interact_area_exited)
+
+func _on_interact_area_entered(interact_area_node):
+	print("Игрок вошел в зону: ", interact_area_node.name)
+	current_interact_area = interact_area_node
+
+func _on_interact_area_exited(interact_area_node):
+	print("Игрок вышел из зоны: ", interact_area_node.name)
+	if current_interact_area == interact_area_node:
+		current_interact_area = null
+
+func _input(event):
+	if event.is_action_pressed("stick_to_the_wall") and current_interact_area != null:
+		interact(current_interact_area.interact_type)
+
+func interact(interact_type: int) -> void:
+	if interact_type == 0:
+		get_tree().change_scene_to_file("res://scenes/terminal.tscn")
+	elif interact_type == 1:
+		pass # doors
+	else:
+		pass # other
 
 func _physics_process(delta: float) -> void:
 	_handle_crouch_input()

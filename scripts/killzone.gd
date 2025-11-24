@@ -7,13 +7,7 @@ extends Area3D
 func _on_body_entered(body: Node3D) -> void:
 	if body.has_method("change_hp"):
 		body.change_hp(-damage)
-	#Engine.time_scale = 0.5
-	#timer.start()
 
 func _on_timer_timeout():
 	Engine.time_scale = 1.0
 	get_tree().reload_current_scene()
-
-func _input(event):
-	if event.is_action_pressed("ui_cancel"):
-		get_tree().change_scene_to_file("res://scenes/terminal.tscn")

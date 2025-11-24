@@ -1,8 +1,8 @@
-ShapeCast3D
+MeshInstance3D
 CollisionShape3D
 Area3D
+ShapeCast3D
 RayCast3D
-MeshInstance3D
 Timer
 StaticBody3D
 Node3D
@@ -12,4 +12,3 @@ SpringArm3D
 WorldEnvironment
 OmniLight3D
 DirectionalLight3D
-CSGCylinder3D
