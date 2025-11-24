@@ -1,8 +1,9 @@
-[gd_scene load_steps=16 format=3 uid="uid://c46xhcphyanjs"]
+[gd_scene load_steps=17 format=3 uid="uid://c46xhcphyanjs"]
 
 [ext_resource type="PackedScene" uid="uid://dkh5gq20djuhr" path="res://scenes/player.tscn" id="1_w2twt"]
 [ext_resource type="PackedScene" uid="uid://bblar6c1bs3sr" path="res://scenes/sticky_wall.tscn" id="3_7ykc4"]
 [ext_resource type="PackedScene" uid="uid://c0ocq4008msa3" path="res://scenes/killzone.tscn" id="3_pu3yx"]
+[ext_resource type="PackedScene" uid="uid://cn550inc4s84m" path="res://scenes/enemy.tscn" id="4_pu3yx"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_w2twt"]
 albedo_color = Color(0.15127608, 0.15127608, 0.15127608, 1)
@@ -115,7 +116,11 @@ wall_height = 7.0
 
 [node name="killzone" parent="." instance=ExtResource("3_pu3yx")]
 collision_mask = 7
+damage = 999.0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="killzone"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.379372, -19.229164, 0)
 shape = SubResource("WorldBoundaryShape3D_gubc5")
+
+[node name="enemy" parent="." instance=ExtResource("4_pu3yx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.3661108, 0.6405039, 2.0540357)

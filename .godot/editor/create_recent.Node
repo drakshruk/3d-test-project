@@ -1,8 +1,8 @@
 CollisionShape3D
+MeshInstance3D
 Timer
 Area3D
 StaticBody3D
-MeshInstance3D
 RayCast3D
 Node3D
 CSGBox3D

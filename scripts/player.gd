@@ -4,6 +4,11 @@ extends CharacterBody3D
 @onready var camera_3d: Camera3D = %Camera3D
 @onready var character: Node3D = $character
 
+@export_group("Health")
+@export var max_hp: float = 100.0
+@export var i_frames: int = 10
+var hp: float = max_hp
+
 ## export group for movement
 @export_group("Movement")
 @export_range(0.1, 20.0, 0.1, "or_greater") var speed: float = 5.0
@@ -52,6 +57,24 @@ var input_dir: Vector2 = Vector2.ZERO
 var direction: Vector3 = Vector3.ZERO
 var is_sprinting: bool = false
 var is_jumping: bool = false
+
+func change_hp(d_hp: float) -> void:
+	hp += d_hp
+	hp = max(0, hp)
+	print("took ", d_hp, "damage. current hp:", hp)
+	shake_camera()
+	if hp == 0:
+		die()
+
+func shake_camera() -> void:
+	var shake_strength = 0.5
+	var original_position = camera_3d.position
+	camera_3d.position += Vector3(randf_range(-shake_strength, shake_strength), randf_range(-shake_strength,shake_strength),0)
+	await get_tree().create_timer(0.1).timeout
+	camera_3d.position = original_position
+
+func die() -> void:
+	get_tree().reload_current_scene()
 
 func _ready() -> void:
 	## Captures the mouse cursor for first-person camera control
