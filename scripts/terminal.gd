@@ -21,6 +21,28 @@ func _on_line_edit_text_submitted(new_text: String) -> void:
 		$Label.text += "\n" + new_text
 		$LineEdit.clear()
 		
+	var words = strcmp(new_text, " ")
+		
+	print(words)
+
+func strcmp(line: String, char: String):
+	if (char.length() != 1):
+		return []
+		
+	var words = []
+	var str = "";
+	while line.length() != 0:
+		var b = line[0]
+		if b == char:
+			words.push_back(str)
+			str = ""
+		else:
+			str += b
+			
+		line = line.erase(0, 1);
+	words.push_back(str)
+	
+	return words
 
 # Обработчик события окончания таймера
 func _on_Timer_timeout():
