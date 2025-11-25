@@ -1,7 +1,7 @@
+ShapeCast3D
 MeshInstance3D
 CollisionShape3D
 Area3D
-ShapeCast3D
 RayCast3D
 Timer
 StaticBody3D

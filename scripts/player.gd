@@ -288,6 +288,8 @@ func _handle_sticking_to_the_walls() -> void:
 			try_stick_to_wall()
 		else:
 			release_from_the_wall()
+	if is_sticking_to_wall and Input.is_action_just_pressed("backward"):
+		release_from_the_wall()
 
 func try_stick_to_wall() -> void:
 	# Check all raycasts for wall detection

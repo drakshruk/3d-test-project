@@ -20,7 +20,8 @@ func _on_line_edit_text_submitted(new_text: String) -> void:
 		history.push_back(new_text)
 		$Label.text += "\n" + new_text
 		$LineEdit.clear()
-	
+		
+
 # Обработчик события окончания таймера
 func _on_Timer_timeout():
 	rotation_var += 0.1
