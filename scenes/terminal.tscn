@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://chua2ty1e2vfx" path="res://scripts/terminal.gd" id="1_m430i"]
 [ext_resource type="Texture2D" uid="uid://bt6kctww13q8m" path="res://Teminal/bcg1.png" id="2_vs6ym"]
 
-[node name="Terminal" type="Node2D"]
+[node name="Terminal" type="CanvasGroup"]
 script = ExtResource("1_m430i")
 
 [node name="LineEdit" type="LineEdit" parent="."]
@@ -23,11 +23,19 @@ repeat_size = Vector2(1151.96, 647.965)
 autoscroll = Vector2(-10, 0)
 
 [node name="bg1" type="Sprite2D" parent="BackGround"]
-position = Vector2(576, 324)
+position = Vector2(706, 333)
 scale = Vector2(0.6, 0.6)
 texture = ExtResource("2_vs6ym")
 
 [node name="Timer" type="Timer" parent="."]
 autostart = true
+
+[node name="camera-display" type="TextureRect" parent="."]
+modulate = Color(0.7927628, 0.0004963243, 0.7936606, 1)
+top_level = true
+offset_left = 362.0
+offset_top = 41.0
+offset_right = 874.0
+offset_bottom = 553.0
 
 [connection signal="text_submitted" from="LineEdit" to="." method="_on_line_edit_text_submitted"]

@@ -1,13 +1,26 @@
 [gd_scene load_steps=18 format=3 uid="uid://c46xhcphyanjs"]
 
+[ext_resource type="Script" uid="uid://dbn0tl48cu1n3" path="res://scripts/main_scene.gd" id="1_rt2n2"]
 [ext_resource type="PackedScene" uid="uid://dkh5gq20djuhr" path="res://scenes/player.tscn" id="1_w2twt"]
-[ext_resource type="PackedScene" uid="uid://bblar6c1bs3sr" path="res://scenes/sticky_wall.tscn" id="3_7ykc4"]
 [ext_resource type="PackedScene" uid="uid://c0ocq4008msa3" path="res://scenes/killzone.tscn" id="3_pu3yx"]
 [ext_resource type="PackedScene" uid="uid://cn550inc4s84m" path="res://scenes/enemy.tscn" id="4_pu3yx"]
 [ext_resource type="PackedScene" uid="uid://ice0b24h0lnn" path="res://scenes/interact_area.tscn" id="5_gubc5"]
+[ext_resource type="PackedScene" uid="uid://cmrs57umpurwt" path="res://scenes/terminal.tscn" id="7_18nlu"]
+[ext_resource type="Script" uid="uid://cnv05yqx4ubs5" path="res://scripts/Interactable.gd" id="7_c16ls"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_w2twt"]
-albedo_color = Color(0.15127608, 0.15127608, 0.15127608, 1)
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pw63i"]
+albedo_color = Color(0.7291523, 0.23946726, 9.62615e-08, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_rt2n2"]
+resource_local_to_scene = true
+size = Vector3(6, 8, 0.3)
+
+[sub_resource type="BoxMesh" id="BoxMesh_c16ls"]
+size = Vector3(4, 6, 0.3)
+
+[sub_resource type="BoxMesh" id="BoxMesh_18nlu"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_c1pb6"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_w2twt"]
 
@@ -20,44 +33,13 @@ sky = SubResource("Sky_w2twt")
 ambient_light_source = 3
 ambient_light_color = Color(5.1018596e-06, 0.6254613, 0.6163081, 1)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5r5lr"]
-albedo_color = Color(0.7294118, 0.23921569, 0, 1)
-
-[sub_resource type="BoxMesh" id="BoxMesh_pu3yx"]
-resource_local_to_scene = true
-material = SubResource("StandardMaterial3D_5r5lr")
-size = Vector3(4, 0.5, 3)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pw63i"]
-albedo_color = Color(0.7291523, 0.23946726, 9.62615e-08, 1)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gubc5"]
-albedo_color = Color(0.7294118, 0.23921569, 0, 1)
-
-[sub_resource type="BoxMesh" id="BoxMesh_pw63i"]
-resource_local_to_scene = true
-material = SubResource("StandardMaterial3D_gubc5")
-size = Vector3(4, 6, 0.5)
-
-[sub_resource type="BoxMesh" id="BoxMesh_7ykc4"]
-resource_local_to_scene = true
-material = SubResource("StandardMaterial3D_gubc5")
-size = Vector3(2, 7, 0.5)
-
-[sub_resource type="BoxMesh" id="BoxMesh_rt2n2"]
-resource_local_to_scene = true
-material = SubResource("StandardMaterial3D_5r5lr")
-size = Vector3(5, 7, 1)
-
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_gubc5"]
 
-[node name="main-scene" type="Node3D"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_w2twt"]
+albedo_color = Color(0.15127608, 0.15127608, 0.15127608, 1)
 
-[node name="CSGBox3D" type="CSGBox3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5704193, -0.17974854, -5.709503)
-material_override = SubResource("StandardMaterial3D_w2twt")
-use_collision = true
-size = Vector3(28.351227, 0.6405029, 28.809875)
+[node name="main-scene" type="Node3D"]
+script = ExtResource("1_rt2n2")
 
 [node name="player" parent="." instance=ExtResource("1_w2twt")]
 unique_name_in_owner = true
@@ -68,21 +50,7 @@ dash_cooldown = 0.5
 dash_gravity_multiplier = 0.8
 post_dash_gravity_multiplier = 0.5
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_pw63i")
-
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="WorldEnvironment"]
-transform = Transform3D(0.9659259, -1.1313339e-08, 0.25881907, -0.23933488, 0.38065076, 0.8932098, -0.09851968, -0.92471886, 0.3676804, -2.07366, 3.8151693, -1.5502803)
-sky_mode = 1
-
 [node name="stickable_walls" type="Node3D" parent="."]
-
-[node name="sticky-wall4" parent="stickable_walls" instance=ExtResource("3_7ykc4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.6011379, 9.766704, -11.865263)
-mesh = SubResource("BoxMesh_pu3yx")
-wall_width = 4.0
-wall_height = 0.5
-wall_depth = 3.0
 
 [node name="wall" type="CSGBox3D" parent="stickable_walls"]
 transform = Transform3D(0.498639, 0, -0.8668098, 0, 1, 0, 0.8668098, 0, 0.498639, 2.116654, 2.331771, -11.391828)
@@ -93,41 +61,90 @@ collision_layer = 4
 collision_mask = 2
 size = Vector3(7.5683594, 4.578247, 1)
 
-[node name="sticky-wall" parent="stickable_walls" instance=ExtResource("3_7ykc4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.6551094, 4.064859, -15.288812)
-mesh = SubResource("BoxMesh_pw63i")
-skeleton = NodePath("../..")
-wall_width = 4.0
-wall_height = 6.0
-wall_depth = 0.5
-
-[node name="sticky-wall2" parent="stickable_walls" instance=ExtResource("3_7ykc4")]
-transform = Transform3D(-0.019511579, 0, 0.9998096, 0, 1, 0, -0.9998096, 0, -0.019511579, -5.507328, 4.9186835, -10.964889)
-mesh = SubResource("BoxMesh_7ykc4")
-skeleton = NodePath("../..")
-wall_width = 2.0
-wall_height = 7.0
-wall_depth = 0.5
-
-[node name="sticky-wall3" parent="stickable_walls" instance=ExtResource("3_7ykc4")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.6375294, 6.880612, -8.915201)
+[node name="wall2" type="CSGMesh3D" parent="stickable_walls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 6, -15)
+use_collision = true
+collision_layer = 4
+collision_mask = 2
 mesh = SubResource("BoxMesh_rt2n2")
-wall_width = 5.0
-wall_height = 7.0
+material = SubResource("StandardMaterial3D_pw63i")
 
-[node name="killzone" parent="." instance=ExtResource("3_pu3yx")]
+[node name="wall3" type="CSGMesh3D" parent="stickable_walls"]
+transform = Transform3D(0.70710695, 0, -0.7071068, 0, 1, 0, 0.7071068, 0, 0.70710695, -5, 11, -12)
+use_collision = true
+collision_layer = 4
+collision_mask = 2
+mesh = SubResource("BoxMesh_c16ls")
+material = SubResource("StandardMaterial3D_pw63i")
+
+[node name="wall4" type="CSGBox3D" parent="stickable_walls"]
+transform = Transform3D(-0.07506579, 0, 0.99717855, 0, 1, 0, -0.99717855, 0, -0.07506579, -2.4083335, 13.423445, -12.602609)
+use_collision = true
+collision_layer = 4
+collision_mask = 2
+size = Vector3(4.4956055, 5, 0.32226563)
+material = SubResource("StandardMaterial3D_pw63i")
+
+[node name="wall5" type="CSGBox3D" parent="stickable_walls"]
+transform = Transform3D(1, 0, 0, 0, -1, -8.742278e-08, 0, 8.742278e-08, -1, 0.5, 16.213121, -13.5)
+use_collision = true
+collision_layer = 4
+collision_mask = 2
+size = Vector3(4, 0.17375489, 4)
+material = SubResource("StandardMaterial3D_pw63i")
+
+[node name="SubViewport" type="SubViewport" parent="."]
+render_target_update_mode = 4
+
+[node name="Camera3D" type="Camera3D" parent="SubViewport"]
+transform = Transform3D(-0.7071068, 0, -0.70710677, 0, 1, 0, 0.70710677, 0, -0.7071068, -8, 4.635765, -7)
+
+[node name="Interactables" type="Node3D" parent="."]
+
+[node name="interact_area_1" parent="Interactables" instance=ExtResource("5_gubc5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 2, 1)
+
+[node name="interact_area_2" parent="Interactables" instance=ExtResource("5_gubc5")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.37231922, 0)
+
+[node name="terminal-interactable" type="MeshInstance3D" parent="Interactables"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.0755253, 1.4211001, -2.8375318)
+mesh = SubResource("BoxMesh_18nlu")
+
+[node name="Area3D" type="Area3D" parent="Interactables/terminal-interactable"]
+collision_mask = 2
+script = ExtResource("7_c16ls")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Interactables/terminal-interactable/Area3D"]
+shape = SubResource("BoxShape3D_c1pb6")
+
+[node name="environment" type="Node3D" parent="."]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="environment"]
+environment = SubResource("Environment_pw63i")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="environment/WorldEnvironment"]
+transform = Transform3D(0.9659259, -1.1313339e-08, 0.25881907, -0.23933488, 0.38065076, 0.8932098, -0.09851968, -0.92471886, 0.3676804, -2.07366, 3.8151693, -1.5502803)
+sky_mode = 1
+
+[node name="void_killzone" parent="environment" instance=ExtResource("3_pu3yx")]
 collision_mask = 7
 damage = 999.0
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="killzone"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="environment/void_killzone"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -15, 0)
 shape = SubResource("WorldBoundaryShape3D_gubc5")
 
-[node name="enemy" parent="." instance=ExtResource("4_pu3yx")]
+[node name="floor" type="CSGBox3D" parent="environment"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5704193, -0.17974854, -5.709503)
+material_override = SubResource("StandardMaterial3D_w2twt")
+use_collision = true
+size = Vector3(28.351227, 0.6405029, 28.809875)
+
+[node name="enemies" type="Node3D" parent="."]
+
+[node name="enemy" parent="enemies" instance=ExtResource("4_pu3yx")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.3661108, 0.6405039, 2.0540357)
 
-[node name="interact_area_1" parent="." instance=ExtResource("5_gubc5")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 2, 1)
-
-[node name="interact_area_2" parent="." instance=ExtResource("5_gubc5")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.37231922, 0)
+[node name="Terminal" parent="." instance=ExtResource("7_18nlu")]
+visible = false

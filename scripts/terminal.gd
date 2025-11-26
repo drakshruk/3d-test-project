@@ -1,4 +1,5 @@
 extends Node2D
+@onready var camera_display: TextureRect = $"camera-display"
 
 class Command:
 	var name: String
@@ -7,12 +8,12 @@ class Command:
 	func _init(n: String = "", desc: String = ""):
 		name = n
 		short_description = desc
-	
 
 var history = [] as Array[String]
 var commands: Array[Command] = [Command.new("help", "prints this text"),
 								Command.new("clear", "clears the screen"),
-								Command.new("history", "displays the history list")]
+								Command.new("history", "displays the history list"),
+								Command.new("camera", "switches to camera view")]
 var rotation_var = 0 as float;
 @onready var timer = $Timer
 
@@ -21,6 +22,8 @@ func _ready() -> void:
 	timer.timeout.connect(_on_Timer_timeout)
 	shift_dir_update(rotation_var)
 	timer.start()
+	EventBus.send_camera_feed.connect(_on_set_camera_feed)
+	print("TerminalUI connected to EventBus signal")
  
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -49,6 +52,8 @@ func processCommand(argv: Array[String]) -> Array[String]:
 		"history":
 			for v in history:
 				out.push_back(v + "\n")
+		"camera":
+			print("switched to camera")
 		_:
 			out.push_back(argv[0] + ": command not found. Try help to see existing commands.\n")
 	
@@ -96,4 +101,10 @@ func shift_dir_update(rotation : float):
 
 func _input(event):
 	if event.is_action_pressed("ui_cancel"):
-		get_tree().change_scene_to_file("res://scenes/main_scene.tscn")
+		self.visible = false
+		EventBus.close_terminal()
+
+func _on_set_camera_feed(camera_feed: ViewportTexture):
+	if camera_feed:
+		print("TerminalUI received camera feed!")
+		camera_display.texture = camera_feed
