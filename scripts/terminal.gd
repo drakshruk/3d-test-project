@@ -1,6 +1,18 @@
 extends Node2D
 
-var history = []
+class Command:
+	var name: String
+	var short_description: String
+	
+	func _init(n: String = "", desc: String = ""):
+		name = n
+		short_description = desc
+	
+
+var history = [] as Array[String]
+var commands: Array[Command] = [Command.new("help", "prints this text"),
+								Command.new("clear", "clears the screen"),
+								Command.new("history", "displays the history list")]
 var rotation_var = 0 as float;
 @onready var timer = $Timer
 
@@ -17,19 +29,41 @@ func _process(delta: float) -> void:
 
 func _on_line_edit_text_submitted(new_text: String) -> void:
 	if (new_text != ""):
-		history.push_back(new_text)
-		$Label.text += "\n" + new_text
 		$LineEdit.clear()
-		
-	var words = strcmp(new_text, " ")
-		
-	print(words)
+		history.push_back(new_text)
+		var argv = strcmp(new_text, " ")
+		var out = processCommand(argv)
+		for v in out:
+			$Label.text += v
 
-func strcmp(line: String, char: String):
+# Функция, возвращающая массив строк, которые будут выведены в терминал
+func processCommand(argv: Array[String]) -> Array[String]:
+	var out = [] as Array[String]
+	
+	match argv[0]:
+		"help":
+			for com in commands:
+				out.push_back(com.name + "  -  " + com.short_description + "\n")
+		"clear":
+			$Label.text = ""
+		"history":
+			for v in history:
+				out.push_back(v + "\n")
+		_:
+			out.push_back(argv[0] + ": command not found. Try help to see existing commands.\n")
+	
+	return out
+
+func strcmp(line: String, char: String) -> Array[String]:
 	if (char.length() != 1):
 		return []
-		
-	var words = []
+	
+	while line[0] == char:
+		line = line.erase(0, 1)
+	while line.contains(char + char):
+		line.replace(char + char, char)
+	
+	var words = [] as Array[String]
 	var str = "";
 	while line.length() != 0:
 		var b = line[0]
