@@ -1,6 +1,6 @@
+MeshInstance3D
 CodeEdit
 ShapeCast3D
-MeshInstance3D
 CollisionShape3D
 Area3D
 RayCast3D
@@ -12,4 +12,3 @@ Camera3D
 SpringArm3D
 WorldEnvironment
 OmniLight3D
-DirectionalLight3D
