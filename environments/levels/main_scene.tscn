@@ -1,12 +1,12 @@
 [gd_scene load_steps=18 format=3 uid="uid://c46xhcphyanjs"]
 
-[ext_resource type="Script" uid="uid://dbn0tl48cu1n3" path="res://scripts/main_scene.gd" id="1_rt2n2"]
-[ext_resource type="PackedScene" uid="uid://dkh5gq20djuhr" path="res://scenes/player.tscn" id="1_w2twt"]
-[ext_resource type="PackedScene" uid="uid://c0ocq4008msa3" path="res://scenes/killzone.tscn" id="3_pu3yx"]
-[ext_resource type="PackedScene" uid="uid://cn550inc4s84m" path="res://scenes/enemy.tscn" id="4_pu3yx"]
-[ext_resource type="PackedScene" uid="uid://ice0b24h0lnn" path="res://scenes/interact_area.tscn" id="5_gubc5"]
-[ext_resource type="PackedScene" uid="uid://cmrs57umpurwt" path="res://scenes/terminal.tscn" id="7_18nlu"]
-[ext_resource type="Script" uid="uid://cnv05yqx4ubs5" path="res://scripts/Interactable.gd" id="7_c16ls"]
+[ext_resource type="Script" uid="uid://3p4mgxuehbjo" path="res://environments/levels/main_scene.gd" id="1_rt2n2"]
+[ext_resource type="PackedScene" uid="uid://dkh5gq20djuhr" path="res://characters/player/scenes/player.tscn" id="1_w2twt"]
+[ext_resource type="PackedScene" uid="uid://c0ocq4008msa3" path="res://environments/hazards/scenes/killzone.tscn" id="3_pu3yx"]
+[ext_resource type="PackedScene" uid="uid://cn550inc4s84m" path="res://characters/enemies/test-enemy/enemy.tscn" id="4_pu3yx"]
+[ext_resource type="PackedScene" uid="uid://ice0b24h0lnn" path="res://code/mechanics/interaction/interact_area.tscn" id="5_gubc5"]
+[ext_resource type="PackedScene" uid="uid://cmrs57umpurwt" path="res://interfaces/ui_scenes/terminal/terminal.tscn" id="7_18nlu"]
+[ext_resource type="Script" uid="uid://tmhxq5xctyhn" path="res://code/mechanics/interaction/Interactable.gd" id="7_c16ls"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pw63i"]
 albedo_color = Color(0.7291523, 0.23946726, 9.62615e-08, 1)

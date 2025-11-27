@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://cmrs57umpurwt"]
 
-[ext_resource type="Script" uid="uid://chua2ty1e2vfx" path="res://scripts/terminal.gd" id="1_m430i"]
-[ext_resource type="Texture2D" uid="uid://bt6kctww13q8m" path="res://Teminal/bcg1.png" id="2_vs6ym"]
+[ext_resource type="Script" uid="uid://bj45yn1bihp3a" path="res://interfaces/ui_scenes/terminal/terminal.gd" id="1_m430i"]
+[ext_resource type="Texture2D" uid="uid://q4xunrujftei" path="res://interfaces/ui_scenes/terminal/bcg1.png" id="2_vs6ym"]
 
 [node name="Terminal" type="CanvasGroup"]
 script = ExtResource("1_m430i")

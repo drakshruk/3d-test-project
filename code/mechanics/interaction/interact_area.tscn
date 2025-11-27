@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://ice0b24h0lnn"]
 
-[ext_resource type="Script" uid="uid://7rkwkony4j4s" path="res://scripts/interact_area.gd" id="1_q06jp"]
+[ext_resource type="Script" uid="uid://cji2qdbotqff0" path="res://code/mechanics/interaction/interact_area.gd" id="1_q06jp"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_hlngw"]
 
