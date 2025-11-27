@@ -80,8 +80,6 @@ var crouch_debounce_time: float = 0.1
 var crouch_transition_progress: float = 1.0  # 1.0 = fully transitioned
 
 @onready var interaction_zone: PlayerInteractionZone = $PlayerInteractionZone
-var current_interactables: Array[Interactable] = []
-var nearest_interactable: Interactable = null
 
 
 func _ready() -> void:
@@ -94,39 +92,14 @@ func _ready() -> void:
 	
 	# Находим все узлы interact_area в сцене
 	# Это может быть неэффективно, если их много. Лучше подключаться при загрузке зон. (На будущее)
-	var interact_areas = get_tree().get_nodes_in_group("interact_areas")
-	for area in interact_areas:
-		if area.has_signal("player_entered"):
-			area.player_entered.connect(_on_interact_area_entered)
-		if area.has_signal("player_exited"):
-			area.player_exited.connect(_on_interact_area_exited)
-	
+
 	if interaction_zone:
-		interaction_zone.interactable_entered.connect(_on_interactable_entered)
-		interaction_zone.interactable_exited.connect(_on_interactable_exited)
+		interaction_zone.interaction_available.connect(_on_interaction_available)
+		interaction_zone.interaction_unavailable.connect(_on_interaction_unavailable)
 
-func _on_interact_area_entered(interact_area_node):
-	print("Игрок вошел в зону: ", interact_area_node.name)
-	current_interact_area = interact_area_node
-
-func _on_interact_area_exited(interact_area_node):
-	print("Игрок вышел из зоны: ", interact_area_node.name)
-	if current_interact_area == interact_area_node:
-		current_interact_area = null
 
 func _input(event):
-	if event.is_action_pressed("stick_to_the_wall") and current_interact_area != null:
-		interact(current_interact_area.interact_type)
-	if event.is_action_pressed("stick_to_the_wall") and nearest_interactable:
-		_try_interact()
-
-func interact(interact_type: int) -> void:
-	if interact_type == 0:
-		get_tree().change_scene_to_file("res://scenes/terminal.tscn")
-	elif interact_type == 1:
-		pass # doors
-	else:
-		pass # other
+	pass
 
 func _physics_process(delta: float) -> void:
 	_handle_crouch_input()
@@ -366,48 +339,8 @@ func _handle_movement_input() -> void:
 	var camera_basis = Transform3D(Basis(Vector3.UP, camera_pivot.rotation.y), Vector3.ZERO).basis
 	direction = (camera_basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 
-func _on_interactable_entered(interactable: Interactable) -> void:
-	if interactable not in current_interactables:
-		current_interactables.append(interactable)
-		_update_nearest_interactable()
+func _on_interaction_available(interactable: Interactable) -> void:
+	print("Interaction available: ", interactable.get_interaction_text())
 
-func _on_interactable_exited(interactable: Interactable) -> void:
-	if interactable in current_interactables:
-		current_interactables.erase(interactable)
-		interactable.set_highlight(false)
-		_update_nearest_interactable()
-
-func _update_nearest_interactable() -> void:
-	var old_nearest = nearest_interactable
-	if current_interactables.is_empty():
-		nearest_interactable = null
-	else:
-		# Find the closest interactable
-		var closest_distance = INF
-		for interactable in current_interactables:
-			var distance = global_position.distance_to(interactable.global_position)
-			if distance < closest_distance:
-				closest_distance = distance
-				nearest_interactable = interactable
-	# Update highlights
-	if old_nearest and old_nearest != nearest_interactable:
-		old_nearest.set_highlight(false)
-
-	if nearest_interactable:
-		nearest_interactable.set_highlight(true)
-		_show_interaction_prompt(nearest_interactable.get_interaction_text())
-	else:
-		_hide_interaction_prompt()
-
-func _show_interaction_prompt(text: String) -> void:
-	# replace with showing interaction prompt
-	print("Interaction available: ", text)
-
-func _hide_interaction_prompt() -> void:
-	# replace with hiding interaction prompt
+func _on_interaction_unavailable() -> void:
 	print("No interaction available")
-	
-
-func _try_interact() -> void:
-	if nearest_interactable and nearest_interactable.can_interact():
-		nearest_interactable.interact(self)

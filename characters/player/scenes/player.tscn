@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://dkh5gq20djuhr"]
 
 [ext_resource type="Script" uid="uid://bfcc5kwyctlad" path="res://characters/player/scripts/player.gd" id="1_3vyb7"]
-[ext_resource type="Script" uid="uid://bt2gid1ips8p1" path="res://code/mechanics/interaction/player_interaction_zone.gd" id="2_g2els"]
+[ext_resource type="Script" uid="uid://bk5bjhqyllohr" path="res://characters/player/scripts/player_interaction_zone.gd" id="2_g2els"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_3vyb7"]
 height = 1.5582886
@@ -40,6 +40,7 @@ collision_mask = 5
 [node name="Camera3D" type="Camera3D" parent="CameraPivot/SpringArm3D"]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 0.9322291, 0.36186865, 0, -0.36186865, 0.9322291, 0, 0.49052882, 0.2607944)
+fov = 110.0
 
 [node name="Raycasts" type="Node3D" parent="CameraPivot"]
 
@@ -76,5 +77,6 @@ script = ExtResource("2_g2els")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="PlayerInteractionZone"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.01977539, 0)
 shape = SubResource("CylinderShape3D_qhqgy")
+debug_color = Color(0.83787805, 0.17992422, 0.83329237, 0.41960785)
 
 [connection signal="area_entered" from="PlayerInteractionZone" to="." method="_on_player_interaction_zone_area_entered"]

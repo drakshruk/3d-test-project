@@ -1,10 +1,9 @@
-[gd_scene load_steps=18 format=3 uid="uid://c46xhcphyanjs"]
+[gd_scene load_steps=17 format=3 uid="uid://c46xhcphyanjs"]
 
 [ext_resource type="Script" uid="uid://3p4mgxuehbjo" path="res://environments/levels/main_scene.gd" id="1_rt2n2"]
 [ext_resource type="PackedScene" uid="uid://dkh5gq20djuhr" path="res://characters/player/scenes/player.tscn" id="1_w2twt"]
 [ext_resource type="PackedScene" uid="uid://c0ocq4008msa3" path="res://environments/hazards/scenes/killzone.tscn" id="3_pu3yx"]
 [ext_resource type="PackedScene" uid="uid://cn550inc4s84m" path="res://characters/enemies/test-enemy/enemy.tscn" id="4_pu3yx"]
-[ext_resource type="PackedScene" uid="uid://ice0b24h0lnn" path="res://code/mechanics/interaction/interact_area.tscn" id="5_gubc5"]
 [ext_resource type="PackedScene" uid="uid://cmrs57umpurwt" path="res://interfaces/ui_scenes/terminal/terminal.tscn" id="7_18nlu"]
 [ext_resource type="Script" uid="uid://tmhxq5xctyhn" path="res://code/mechanics/interaction/Interactable.gd" id="7_c16ls"]
 
@@ -101,14 +100,8 @@ transform = Transform3D(-0.7071068, 0, -0.70710677, 0, 1, 0, 0.70710677, 0, -0.7
 
 [node name="Interactables" type="Node3D" parent="."]
 
-[node name="interact_area_1" parent="Interactables" instance=ExtResource("5_gubc5")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 2, 1)
-
-[node name="interact_area_2" parent="Interactables" instance=ExtResource("5_gubc5")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.37231922, 0)
-
 [node name="terminal-interactable" type="MeshInstance3D" parent="Interactables"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.0755253, 1.4211001, -2.8375318)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.7279053, 1.5716951, 1.3317554)
 mesh = SubResource("BoxMesh_18nlu")
 
 [node name="Area3D" type="Area3D" parent="Interactables/terminal-interactable"]
